@@ -1,5 +1,7 @@
 # OmniPost AI
-
+<p align="center">
+  <img src="public/omnipost.png" alt="OmniPost AI" width="800">
+</p>
 Chrome extension for multi-platform auto-posting. AI-powered (ChatGPT / Gemini) content generation with one-click publish to Facebook, Threads, and X (Twitter).
 
 ## Features
