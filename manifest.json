@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "OmniPost AI",
+  "version": "1.0.0",
+  "description": "Multi-platform auto-posting automation AI (ChatGPT and Gemini)",
+  "permissions": [
+    "storage",
+    "alarms",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://gemini.google.com/*",
+    "https://www.threads.com/*",
+    "https://www.facebook.com/*",
+    "https://x.com/*",
+    "https://twitter.com/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_title": "OmniPost AI",
+    "default_icon": {
+      "16": "public/icon-16.png",
+      "48": "public/icon-48.png",
+      "128": "public/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "public/icon-16.png",
+    "48": "public/icon-48.png",
+    "128": "public/icon-128.png"
+  },
+  "background": {
+    "service_worker": "src/background/background.ts",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*", "https://gemini.google.com/*"],
+      "js": ["src/content_scripts/content_ai.ts"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.threads.com/*",
+        "https://www.facebook.com/*",
+        "https://x.com/*",
+        "https://twitter.com/*"
+      ],
+      "js": ["src/content_scripts/content_social.ts"],
+      "run_at": "document_idle"
+    }
+  ]
+}
