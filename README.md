@@ -84,6 +84,10 @@ Extension build produces a `dist/` folder ready for Chrome loading:
 - [Documentation](https://omnipost.codeworks.web.id/)
 - [GitHub](https://github.com/wanglinsaputra/OmniPost-AI)
 
+## Disclaimer
+
+OmniPost AI disediakan untuk tujuan edukasi dan produktivitas pribadi. Developer tidak bertanggung jawab atas penyalahgunaan, termasuk namun tidak terbatas pada: spam, pelanggaran ToS platform, konten ilegal, atau pelanggaran hak cipta. Gunakan dengan bijak dan patuhi aturan masing-masing platform.
+
 ## Licensi
 
 [MIT](LICENSE)
