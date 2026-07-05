@@ -39,15 +39,6 @@ npm run dev       # watch mode with hot reload
 npm run build     # production build -> dist/
 ```
 
-### Docs
-
-```bash
-cd docs
-npm install
-npm run dev       # dev server at localhost:5173
-npm run build     # production build -> dist/
-```
-
 ## Build Output
 
 Extension build produces a `dist/` folder ready for Chrome loading:
