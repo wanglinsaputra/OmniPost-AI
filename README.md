@@ -14,13 +14,6 @@ Chrome extension for multi-platform auto-posting. AI-powered (ChatGPT / Gemini) 
 - **Multi-Paragraph Threads** -- configure 1-5 paragraphs for Threads
 - **No API Keys Required** -- works with your existing browser login sessions
 
-## Project Structure
-
-```
-docs/          Documentation website (Vite + Tailwind CSS v4)
-extension/     Chrome extension (MV3 + Vite + CRXJS + TypeScript + Tailwind v3)
-```
-
 ### Extension
 
 ```
@@ -33,15 +26,6 @@ extension/
       platforms/          Per-platform posting logic (facebook.ts, threads.ts, x.ts)
     popup/                Extension popup UI (index.html, popup.ts, style.css)
     utils/                Shared types, selectors, Supabase client
-```
-
-### Docs
-
-```
-docs/
-  index.html              Documentation page
-  style.css               Tailwind v4 theme (Dala design system)
-  vite.config.js          Vite config with Tailwind v4 plugin
 ```
 
 ## Development
