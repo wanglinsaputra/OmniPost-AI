@@ -14,6 +14,17 @@ export const SELECTORS = {
     
     sendButtonEnabled: 'button[data-testid="send-button"]:not([disabled])',
   },
+  claude: {
+    input: 'div[contenteditable="true"]',
+
+    sendButton: 'button[aria-label*="Send" i], button[aria-label*="send message" i]',
+
+    stopButton: 'button[aria-label*="Stop" i], button[aria-label*="stop response" i]',
+
+    assistantMessage: '.font-claude-response',
+
+    newChatButton: 'a[href="/new"], button[aria-label*="New chat" i]',
+  },
   gemini: {
     input: 'div[contenteditable="true"][role="textbox"]',
     

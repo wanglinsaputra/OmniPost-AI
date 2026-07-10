@@ -26,6 +26,7 @@ async function clearProgress(): Promise<void> {
 const AI_URLS = [
   { host: 'chatgpt.com', url: 'https://chatgpt.com/?temporary-chat=true' },
   { host: 'gemini.google.com', url: 'https://gemini.google.com' },
+  { host: 'claude.ai', url: 'https://claude.ai/new?incognito=true' },
 ] as const
 
 const SOCIAL_URLS: Record<string, string> = {
@@ -143,6 +144,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 const AI_MODEL_MAP: Record<string, typeof AI_URLS[number]> = {
   chatgpt: AI_URLS[0],
   gemini: AI_URLS[1],
+  claude: AI_URLS[2],
 }
 
 async function handleGeneratePost(prompt: string, aiModel = 'chatgpt', targetPlatform?: string, paragraphCount = 3): Promise<{ content: string }> {

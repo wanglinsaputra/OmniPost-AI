@@ -1,13 +1,14 @@
 
 
 import { SELECTORS } from '../utils/selectors'
-type AIPlatform = 'chatgpt' | 'gemini'
+type AIPlatform = 'chatgpt' | 'gemini' | 'claude'
 
 function detectPlatform(): AIPlatform | null {
   const host = window.location.hostname
   // console.log('[content_ai] detectPlatform -> host:', host)
   if (host.includes('chatgpt.com')) return 'chatgpt'
   if (host.includes('gemini.google.com')) return 'gemini'
+  if (host.includes('claude.ai')) return 'claude'
   // console.log('[content_ai] unknown platform')
   return null
 }
@@ -174,6 +175,60 @@ async function handleGemini(prompt: string): Promise<string> {
   // console.log('[content_ai] gemini response text:', cleaned.slice(0, 150))
   return cleaned
 }
+async function handleClaude(prompt: string): Promise<string> {
+  // console.log('[content_ai] handleClaude start, prompt:', prompt.slice(0, 80))
+
+  let input: Element
+  try {
+    input = await waitForElement(SELECTORS.claude.input, 15000)
+  } catch {
+    input = await waitForElement('textarea, [role="textbox"]', 15000)
+  }
+  // console.log('[content_ai] claude input found, typing')
+  setInputValue(input, prompt)
+  await new Promise(r => setTimeout(r, 500))
+
+  let sendBtn = document.querySelector(SELECTORS.claude.sendButton) as HTMLElement | null
+  if (!sendBtn) {
+    sendBtn = Array.from(document.querySelectorAll('button')).find(
+      b => (b.getAttribute('aria-label')?.toLowerCase().includes('send') || b.textContent?.toLowerCase().includes('send'))
+    ) as HTMLElement | null
+  }
+  // console.log('[content_ai] claude send button:', sendBtn)
+  if (!sendBtn) throw new Error('Claude: send button not found')
+  if (sendBtn instanceof HTMLButtonElement && sendBtn.disabled) {
+    await new Promise(r => setTimeout(r, 1000))
+  }
+  safeClick(sendBtn)
+
+  // console.log('[content_ai] waiting for claude stop button...')
+  let stopBtn = document.querySelector(SELECTORS.claude.stopButton)
+  if (!stopBtn) {
+    stopBtn = Array.from(document.querySelectorAll('button')).find(
+      b => b.textContent?.toLowerCase().includes('stop')
+    ) ?? null
+  }
+  if (stopBtn) {
+    await waitForElementGone(SELECTORS.claude.stopButton, 120000)
+  } else {
+    // console.log('[content_ai] no stop btn, waiting 15s')
+    await new Promise(r => setTimeout(r, 15000))
+  }
+  await new Promise(r => setTimeout(r, 2000))
+
+  // console.log('[content_ai] extracting claude response')
+  const article = document.querySelector(SELECTORS.claude.assistantMessage)
+  if (!article) throw new Error('Claude: no response found')
+  const paragraphs = Array.from(article.querySelectorAll('p'))
+  const text = paragraphs.map(p => p.textContent?.trim() ?? '').filter(Boolean).join('\n')
+  const cleaned = text
+    .replace(/^(Berikut|Here( is|'s)|Ini|Tentu|Tentu saja|Of course|Sure|Absolutely|Saya buatkan|Saya tuliskan).*?\n/i, '')
+    .replace(/\n*(Jika|Jika ingin|Anda bisa|Feel free|Let me know|Semoga).*$/is, '')
+    .replace(/^Edit\s*\n*/gm, '')
+    .trim()
+  // console.log('[content_ai] claude response text:', cleaned.slice(0, 150))
+  return cleaned
+}
 function buildThreadsPrompt(paragraphCount: number): string {
   if (paragraphCount <= 1) return 'Output ONLY the post content. No greetings, no introductions, no explanations, no offers for alternative versions. Write a single short engaging paragraph. Topic:'
   const parts: string[] = ['Output ONLY the post content. No greetings, no introductions, no explanations, no offers for alternative versions.']
@@ -243,6 +298,8 @@ async function handleGenerate(prompt: string, targetPlatform?: string, paragraph
   // console.log('[content_ai] calling handle', platform)
   const content = platform === 'chatgpt'
     ? await handleChatGPT(finalPrompt)
+    : platform === 'claude'
+    ? await handleClaude(finalPrompt)
     : await handleGemini(finalPrompt)
 
   return { content }

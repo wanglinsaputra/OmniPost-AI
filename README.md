@@ -8,7 +8,7 @@ Chrome extension for multi-platform auto-posting. AI-powered (ChatGPT / Gemini) 
 
 ## Features
 
-- **AI Content Generation** -- pick ChatGPT or Gemini, describe your topic, AI writes the post
+- **AI Content Generation** -- pick ChatGPT, Claude, or Gemini, describe your topic, AI writes the post
 - **Multi-Platform** -- post to Facebook, Threads, and X (Twitter) from a single popup
 - **Thread Scheduling** -- set date and time for Threads posts (uses chrome.alarms)
 - **Multi-Paragraph Threads** -- configure 1-5 paragraphs for Threads
@@ -28,8 +28,6 @@ extension/
     utils/                Shared types, selectors, Supabase client
 ```
 
-## Development
-
 ### Extension
 
 ```bash
@@ -46,6 +44,14 @@ Extension build produces a `dist/` folder ready for Chrome loading:
 2. Enable Developer mode
 3. Load unpacked -> select `extension/dist/`
 
+## AI Models
+
+| Model   | Temp/Incognito Mode |
+|---------|---------------------|
+| ChatGPT | `?temporary-chat=true` |
+| Claude  | `?incognito=true` |
+| Gemini  | Fresh session |
+
 ## Platform Support
 
 | Platform  | Post Type        | Schedule | Paragraph Count |
@@ -58,10 +64,6 @@ Extension build produces a `dist/` folder ready for Chrome loading:
 
 - [Documentation](https://omnipost.codeworks.web.id/)
 - [GitHub](https://github.com/wanglinsaputra/OmniPost-AI)
-
-## Disclaimer
-
-OmniPost AI disediakan untuk tujuan edukasi dan produktivitas pribadi. Developer tidak bertanggung jawab atas penyalahgunaan, termasuk namun tidak terbatas pada: spam, pelanggaran ToS platform, konten ilegal, atau pelanggaran hak cipta. Gunakan dengan bijak dan patuhi aturan masing-masing platform.
 
 ## Licensi
 

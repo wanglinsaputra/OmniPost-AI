@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "OmniPost AI",
   "version": "1.0.0",
-  "description": "Multi-platform auto-posting automation AI (ChatGPT and Gemini)",
+  "description": "Multi-platform auto-posting automation AI (ChatGPT, Claude, Gemini)",
   "permissions": [
     "storage",
     "alarms",
@@ -11,6 +11,7 @@
   ],
   "host_permissions": [
     "https://chatgpt.com/*",
+    "https://claude.ai/*",
     "https://gemini.google.com/*",
     "https://www.threads.com/*",
     "https://www.facebook.com/*",
@@ -40,7 +41,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://chatgpt.com/*", "https://gemini.google.com/*"],
+      "matches": ["https://chatgpt.com/*", "https://claude.ai/*", "https://gemini.google.com/*"],
       "js": ["src/content_scripts/content_ai.ts"],
       "run_at": "document_idle"
     },
